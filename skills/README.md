@@ -8,6 +8,8 @@
 |---|---|---|
 | [`project-boundary-auditor`](project-boundary-auditor/) | 分析软件项目真实边界、契约、bug、功能缺口、文档缺失和扩展风险 | 判断项目能否作为基础；判断 use / patch / wrap / fork / redesign |
 | [`bug-or-boundary`](bug-or-boundary/) | 快速判断一个现象是 bug、设计边界、功能缺口、文档缺失、环境问题、误用还是技术债 | 判断某个具体现象是否值得提 issue 或 patch |
+| [`sandbox-gap-finder`](sandbox-gap-finder/) | 分析AI agent沙箱系统，从第一性原理发现可信的R&D或研究缝隙 | 审查微VM、Docker、gVisor、bubblewrap、Firecracker等沙箱项目 |
+| [`semantic-extraction`](semantic-extraction/) | 从技术系统、论文、基准测试、API、运行时、数据库、存储系统和agent工作流中提取语义 | 分析系统并发现研究缝隙、设计实验 |
 
 ## 文件约定
 
