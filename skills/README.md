@@ -8,8 +8,13 @@
 |---|---|---|
 | [`project-boundary-auditor`](project-boundary-auditor/) | 分析软件项目真实边界、契约、bug、功能缺口、文档缺失和扩展风险 | 判断项目能否作为基础；判断 use / patch / wrap / fork / redesign |
 | [`bug-or-boundary`](bug-or-boundary/) | 快速判断一个现象是 bug、设计边界、功能缺口、文档缺失、环境问题、误用还是技术债 | 判断某个具体现象是否值得提 issue 或 patch |
+| [`company-generation-screener`](company-generation-screener/) | 通过中国产业代际框架分析公司，判断属于第6/7/8代，区分真实投资标的与叙事股 | 分析上市公司或非上市公司是否具备独立知识产权、全球化扩张、全球资源配置能力 |
 | [`sandbox-gap-finder`](sandbox-gap-finder/) | 分析AI agent沙箱系统，从第一性原理发现可信的R&D或研究缝隙 | 审查微VM、Docker、gVisor、bubblewrap、Firecracker等沙箱项目 |
 | [`semantic-extraction`](semantic-extraction/) | 从技术系统、论文、基准测试、API、运行时、数据库、存储系统和agent工作流中提取语义 | 分析系统并发现研究缝隙、设计实验 |
+| [`english-vocab-card-builder`](english-vocab-card-builder/) | 从英文文章和生词列表生成可复习词卡、搭配、例句和 Anki TSV | 阅读文章后整理生词、导入生词本 |
+| [`english-sentence-pattern-miner`](english-sentence-pattern-miner/) | 从英文文章提炼可迁移句型 | 作文、看图写话、口头复述前积累句型 |
+| [`english-listening-chunk-trainer`](english-listening-chunk-trainer/) | 分析听力稿 chunk、弱读、连读、重音和 shadowing 跟读 | 听不清自然语速、词粘在一起时 |
+| [`english-output-feedback-coach`](english-output-feedback-coach/) | 批改基于今日生词、词块、句型写出的英文输出 | 写完 80 词作文、看图写话、复述稿后 |
 
 ## 文件约定
 
