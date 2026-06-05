@@ -1,7 +1,7 @@
 ---
 
-name: company-generation-screener
-description: Analyze a company through the Chinese industrial generation framework, identify whether it belongs to generation 6, 7, or 8, and judge whether it is a real investable candidate or just a narrative stock.
+name: jn_company
+description: Analyze a company through the Chinese industrial generation framework, identify whether it belongs to generation 6, 7, or 8, and judge whether it is a real investable candidate or just a narrative stock. Short key for personal invocation.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Company Generation Screener

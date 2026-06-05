@@ -1,6 +1,6 @@
 ---
-name: english-listening-chunk-trainer
-description: Analyze an English listening transcript by splitting it into real listening chunks, explaining weak forms, linking, stress, rhythm, and shadowing practice. Use when the user provides a transcript or says they cannot hear how words are connected.
+name: jn_chunk
+description: Analyze an English listening transcript by splitting it into real listening chunks, explaining weak forms, linking, stress, rhythm, and shadowing practice. Use when the user provides a transcript or says they cannot hear how words are connected. Short key for personal invocation.
 ---
 
 # English Listening Chunk Trainer

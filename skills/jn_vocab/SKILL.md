@@ -1,6 +1,6 @@
 ---
-name: english-vocab-card-builder
-description: Build reusable vocabulary cards from an English article and a learner's unknown-word list. Use when the user provides an English passage and unfamiliar words, and wants meanings, base forms, inflections, collocations, example sentences, and exportable review cards.
+name: jn_vocab
+description: Build reusable vocabulary cards from an English article and a learner's unknown-word list. Use when the user provides an English passage and unfamiliar words, and wants meanings, base forms, inflections, collocations, example sentences, and exportable review cards. Short key for personal invocation.
 ---
 
 # English Vocab Card Builder

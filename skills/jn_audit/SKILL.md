@@ -1,6 +1,6 @@
 ---
-name: project-boundary-auditor
-description: Analyze a software project to determine its real boundaries, contracts, bugs, feature gaps, documentation gaps, misuse cases, environment issues, technical debt, extension risks, and upstream contribution strategy. Use when evaluating whether to use, configure, patch, wrap, fork, redesign, or contribute to a project.
+name: jn_audit
+description: Analyze a software project to determine its real boundaries, contracts, bugs, feature gaps, documentation gaps, misuse cases, environment issues, technical debt, extension risks, and upstream contribution strategy. Use when evaluating whether to use, configure, patch, wrap, fork, redesign, or contribute to a project. Short key for personal invocation.
 ---
 
 # Project Boundary Auditor

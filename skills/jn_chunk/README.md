@@ -27,7 +27,7 @@
 ## 调用 Prompt
 
 ```markdown
-请使用 `english-listening-chunk-trainer` skill 分析下面听力稿。
+请使用 `jn_chunk` skill 分析下面听力稿。
 
 我的目标不是只看懂文本，而是听懂自然语速下这些词如何连在一起。
 

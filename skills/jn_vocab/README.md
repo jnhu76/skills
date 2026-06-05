@@ -25,7 +25,7 @@
 ## 调用 Prompt
 
 ```markdown
-请使用 `english-vocab-card-builder` skill 整理下面文章中的生词。
+请使用 `jn_vocab` skill 整理下面文章中的生词。
 
 我的目标不是只知道中文意思，而是：
 
