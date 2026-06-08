@@ -15,6 +15,7 @@
 | [`jn_sentence`](jn_sentence/) | 从英文文章提炼可迁移句型 | 作文、看图写话、口头复述前积累句型 |
 | [`jn_chunk`](jn_chunk/) | 分析听力稿 chunk、弱读、连读、重音和 shadowing 跟读 | 听不清自然语速、词粘在一起时 |
 | [`jn_feedback`](jn_feedback/) | 批改基于今日生词、词块、句型写出的英文输出 | 写完 80 词作文、看图写话、复述稿后 |
+| [`pharma30days`](pharma30days/) | 固定医药/生物科技主题的最近 N 天新闻研究：多源检索、去重聚类、药品/靶点/阶段映射、催化评分和股价影响分层 | 周报监控创新药公司；审计单条医药新闻；跟踪 ASCO/ESMO/AACR、CDE/NMPA/FDA、BD 出海、竞品读出等催化 |
 
 ## 文件约定
 
@@ -40,6 +41,7 @@ jn_vocab
 jn_sentence
 jn_chunk
 jn_feedback
+pharma30days
 ```
 
 不要使用：

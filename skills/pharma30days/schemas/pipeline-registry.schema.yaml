@@ -1,0 +1,33 @@
+type: object
+properties:
+  company:
+    type: object
+    properties:
+      chinese_name: {type: string}
+      english_name: {type: string}
+      tickers: {type: array, items: {type: string}}
+  assets:
+    type: array
+    items:
+      type: object
+      properties:
+        asset_id: {type: string}
+        names: {type: array, items: {type: string}}
+        target: {type: string}
+        modality: {type: string}
+        indications:
+          type: array
+          items:
+            type: object
+            properties:
+              indication: {type: string}
+              phase: {type: string}
+              trial_names: {type: array, items: {type: string}}
+              trial_ids: {type: array, items: {type: string}}
+              endpoints: {type: array, items: {type: string}}
+              latest_event: {type: string}
+              next_milestone: {type: string}
+        partners: {type: array, items: {type: string}}
+        evidence_sources: {type: array, items: {type: string}}
+        confidence:
+          enum: [high, medium, low]

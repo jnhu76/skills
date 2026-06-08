@@ -1,0 +1,39 @@
+type: object
+required:
+  - id
+  - title
+  - source
+  - source_tier
+  - claims
+properties:
+  id:
+    type: string
+  published_at:
+    type: string
+  title:
+    type: string
+  source:
+    type: string
+  source_tier:
+    enum: [S, A, B, C, D]
+  url_or_citation:
+    type: string
+  entities:
+    type: object
+    properties:
+      companies: {type: array, items: {type: string}}
+      drugs: {type: array, items: {type: string}}
+      targets: {type: array, items: {type: string}}
+      indications: {type: array, items: {type: string}}
+      trials: {type: array, items: {type: string}}
+      agencies: {type: array, items: {type: string}}
+  claims:
+    type: array
+    items:
+      type: object
+      properties:
+        raw_claim: {type: string}
+        claim_type:
+          enum: [clinical, regulatory, commercial, bd, safety, competitor, sentiment, policy]
+        evidence_status:
+          enum: [verified, partially_verified, unverified, contradicted]

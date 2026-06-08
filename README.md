@@ -15,3 +15,4 @@
 | [`jn_sentence`](skills/jn_sentence/) | 从英文文章提炼可迁移句型，用于作文、看图写话和复述 |
 | [`jn_chunk`](skills/jn_chunk/) | 分析听力稿 chunk、弱读、连读、重音和 shadowing 跟读 |
 | [`jn_feedback`](skills/jn_feedback/) | 批改基于今日生词、词块、句型写出的作文、看图写话或复述稿 |
+| [`pharma30days`](skills/pharma30days/) | 近 N 天医药/生物科技新闻研究：按公司、药品、靶点、适应症动态检索、去重聚类、映射管线并判断临床/监管/BD/商业/股价催化 |
