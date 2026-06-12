@@ -1,5 +1,5 @@
 ---
-name: jn_sandbox
+name: jn-sandbox
 description: Analyze AI agent sandbox systems, repositories, papers, and design docs to find first-principles R&D or research gaps. Use when reviewing sandbox projects such as microVM, Docker, gVisor, bubblewrap, Firecracker, E2B-compatible sandboxes, or when updating CapGuard research plans around security, least privilege, performance, isolation, deployability, policy synthesis, trace verification, and rollback semantics. Short key for personal invocation.
 license: MIT
 metadata:

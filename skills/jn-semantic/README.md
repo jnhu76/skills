@@ -1,4 +1,4 @@
-# jn_semantic skill
+# jn-semantic skill
 
 This Claude skill extracts semantics from technical systems, papers, benchmarks, APIs, runtimes, databases, storage systems, sandboxes, and agent workflows.
 
@@ -7,13 +7,13 @@ This Claude skill extracts semantics from technical systems, papers, benchmarks,
 Copy this directory to:
 
 ```bash
-.claude/skills/jn_semantic/
+.claude/skills/jn-semantic/
 ```
 
 or:
 
 ```bash
-~/.claude/skills/jn_semantic/
+~/.claude/skills/jn-semantic/
 ```
 
 ## Use
@@ -21,13 +21,13 @@ or:
 Ask Claude:
 
 ```text
-Use the jn_semantic skill to analyze this system and find research gaps.
+Use the jn-semantic skill to analyze this system and find research gaps.
 ```
 
 Example:
 
 ```text
-请用 jn_semantic skill 分析 CubeSandbox：
+请用 jn-semantic skill 分析 CubeSandbox：
 1. 抽出第一性目标
 2. 基本操作
 3. 对象/状态/effect

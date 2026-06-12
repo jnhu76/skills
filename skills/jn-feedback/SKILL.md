@@ -1,5 +1,5 @@
 ---
-name: jn_feedback
+name: jn-feedback
 description: Correct and improve the learner's English output using the vocabulary, chunks, and sentence patterns from a recent article or listening transcript. Use for picture description, short essays, sentence imitation, oral retelling drafts, and error feedback loops. Short key for personal invocation.
 ---
 

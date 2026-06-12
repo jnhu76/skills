@@ -1,5 +1,5 @@
 ---
-name: jn_semantic
+name: jn-semantic
 description: Use this skill when you need to extract research or system semantics from a technical problem, paper, benchmark, API, runtime, database mechanism, sandbox, storage system, or agent workflow. It helps convert feature piles into operations, objects, states, observable effects, rules, invariants, trade-offs, research questions, and experiments. Short key for personal invocation.
 ---
 
@@ -531,7 +531,7 @@ cross-backend semantic equivalence
 
 ## Full Template
 
-Use `templates/jn_semantic-report.md`.
+Use `templates/jn-semantic-report.md`.
 
 ---
 

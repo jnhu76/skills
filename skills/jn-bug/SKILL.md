@@ -1,5 +1,5 @@
 ---
-name: jn_bug
+name: jn-bug
 description: Quickly classify an observed project behavior as bug, design boundary, feature gap, documentation gap, environment issue, misuse, or technical debt. Short key for personal invocation.
 ---
 

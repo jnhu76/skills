@@ -34,7 +34,7 @@
 你可以把下面这段直接丢给任意 coding agent：
 
 ```markdown
-请使用 `jn_audit` skill 分析这个项目。
+请使用 `jn-audit` skill 分析这个项目。
 
 我的目标不是总结 README，而是判断它的真实边界：
 
@@ -87,7 +87,7 @@
 ## 分析 skillshare / SkillDist 的专用调用 Prompt
 
 ```markdown
-请使用 `jn_audit` skill 分析 skillshare。
+请使用 `jn-audit` skill 分析 skillshare。
 
 我的目标不是简单同步 skill，而是判断它能不能作为“本地 agent capability 分发中心”的基础。
 

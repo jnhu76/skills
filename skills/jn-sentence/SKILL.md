@@ -1,5 +1,5 @@
 ---
-name: jn_sentence
+name: jn-sentence
 description: Extract reusable sentence patterns from an English article so the learner can use them in writing, picture description, oral retelling, and short essays. Use when the user wants to learn sentence structures rather than only translate a passage. Short key for personal invocation.
 ---
 

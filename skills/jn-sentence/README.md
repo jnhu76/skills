@@ -23,7 +23,7 @@
 ## 调用 Prompt
 
 ```markdown
-请使用 `jn_sentence` skill 分析下面文章。
+请使用 `jn-sentence` skill 分析下面文章。
 
 我的目标不是只翻译文章，而是提炼以后能在作文、看图写话、复述中使用的句型。
 

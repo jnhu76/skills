@@ -26,7 +26,7 @@
 ## 调用 Prompt
 
 ```markdown
-请使用 `jn_feedback` skill 批改我的英文输出。
+请使用 `jn-feedback` skill 批改我的英文输出。
 
 今日生词：
 

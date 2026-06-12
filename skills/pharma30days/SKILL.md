@@ -1,13 +1,16 @@
-name pharma30days
-version 0.3.0
-description Research recent pharmaceutical / biotech innovation-drug news, map it to drug assets, clinical stages, regulatory milestones, competitive dynamics, and stock-impact catalysts. Default lookback is 30 days; use --days=7 for weekly monitoring.
-argument-hint pharma30days 恒瑞医药 --days=7 | pharma30days SHR-A1811 | pharma30days HER3 ADC 中国创新药 --days=30
-allowed-tools Bash, Read, Write, WebSearch
-homepage https://github.com/jnhu76/skills
-repository local
-license MIT
-user-invocable true
-tags research, news, pharma, biotech, oncology, clinical-trials, regulatory, stocks, citations, web-search, tencent-news
+---
+name: pharma30days
+description: Research recent pharmaceutical and biotech innovation-drug news, map it to drug assets, clinical stages, regulatory milestones, competitive dynamics, and stock-impact catalysts. Use for recent-window pharma or biotech monitoring; default lookback is 30 days, use 7 days for weekly monitoring.
+license: MIT
+allowed-tools: Bash Read Write WebSearch
+metadata:
+  version: "0.3.0"
+  argument-hint: "pharma30days 恒瑞医药 --days=7 | pharma30days SHR-A1811 | pharma30days HER3 ADC 中国创新药 --days=30"
+  homepage: "https://github.com/jnhu76/skills"
+  repository: "local"
+  user-invocable: "true"
+  tags: "research, news, pharma, biotech, oncology, clinical-trials, regulatory, stocks, citations, web-search, tencent-news"
+---
 
 # pharma30days
 
