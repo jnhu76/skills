@@ -1,6 +1,6 @@
 ---
 name: pharma30days
-description: Research recent pharmaceutical and biotech innovation-drug news, map it to drug assets, clinical stages, regulatory milestones, competitive dynamics, and stock-impact catalysts. Use for recent-window pharma or biotech monitoring; default lookback is 30 days, use 7 days for weekly monitoring.
+description: Research recent pharmaceutical and biotech innovation-drug news, map to drug assets, clinical stages, regulatory milestones, and stock-impact catalysts. Use for pharma/biotech monitoring.
 license: MIT
 allowed-tools: Bash Read Write WebSearch
 metadata:
