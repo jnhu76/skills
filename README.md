@@ -18,7 +18,8 @@
 | `jn-chunk` | 分析听力稿 chunk、弱读、连读、重音和 shadowing |
 | `jn-feedback` | 批改基于生词、词块、句型的英文输出 |
 | `pharma30days` | 近 N 天医药/生物科技新闻研究 |
-| `writing-coach` | 诊断和训练分析型写作：判断、比较、边界、细节 |
+| `writing-coach` | 有状态的写作教学：用 Markdown 工作区做连续训练 |
+| `writing-coach-simple` | 轻量分析型写作诊断和修改，无工作区依赖 |
 
 ## 目录结构
 
