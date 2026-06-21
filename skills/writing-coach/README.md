@@ -1,65 +1,28 @@
-# Writing Coach v2
+# Writing Coach Workspace
 
-## 这个 skill 是干什么的？
+This is a Markdown workspace for continuous writing training.
 
-系统训练用户从"事实清单/大纲式表达"升级为"有判断、有比较、有边界、有细节"的分析型写作。用于诊断、逐句修改、生成范文、反向讲解和布置训练任务。重点训练中心判断、判断力度管理、比较能力、逻辑链、细节扩写和情绪层次。
-
-## 什么时候用？
-
-适合：
-
-- 写完一段文字或大纲，觉得太像提纲、缺乏细节，需要诊断和逐句修改
-- 容易写成事实清单，只列信息，不敢下判断，需要训练判断力
-- 不敢写自己不确定的东西，担心说错力度，需要学习边界表达
-- 情绪写得太满，需要学习"观察 → 判断 → 边界"的成熟表达
-- 想针对特定文体（技术文章、议论文、散文、复盘、科技论文）学习结构模板
-- 需要获得具体的训练任务来持续提升分析型写作能力
-
-## 什么时候不用？
-
-不适合：
-
-- 只需要语法校对、拼写检查或简单润色，而不需要写作训练
-- 只需要翻译或改写他人文字，而不是提升自己的原创表达
-- 想快速拿到成稿，完全不想学习写作方法
-
-## 调用 Prompt
-
-```markdown
-请使用 `writing-coach` skill 完成下面任务。
-
-我的目标是：
+Use it like this in a new conversation:
 
 ```text
-<目标，例如：把这段事实清单升级为有判断的分析型文章 / 诊断这段文字的判断力度 / 给这个观点补比较和边界>
+启动 writing-coach。
+请读取当前工作区的 SKILL.md、MISSION.md、NOTES.md、learning-records/、reference/。
+今天我要提交作业：...
 ```
 
-我提供的材料是：
+## Main workflow
 
-```text
-<用户写的文字、大纲、观点或主题>
-```
-```
+1. Teacher reads mission and learning records.
+2. Teacher identifies current level and nearest useful skill.
+3. User submits a small exercise or draft.
+4. Teacher reviews with score, diagnosis, and rewrite target.
+5. User writes a second draft.
+6. Teacher updates reviews and learning records.
 
-## 输入材料建议
+## Minimum files to keep updated
 
-最好提供：
-
-- 你写的原始文字、大纲或草稿（越完整越好）
-- 目标文体（技术文章 / 议论文 / 散文 / 复盘 / 科技论文 / 技术日志 / 不确定）
-- 写作目的和读者对象（如有）
-- 你最不满意的具体段落或句子（如有）
-
-## 目录结构
-
-```
-skills/writing-coach/
-├── SKILL.md
-├── README.md
-└── reference/
-    ├── DIAGNOSTICS.md    # 诊断维度 + 关键词检查表
-    ├── MODES.md           # 输出模式模板
-    ├── SENTENCE-PATTERNS.md # 双五句法
-    ├── TEXT-SHAPES.md     # 文体模板
-    └── STYLE-RULES.md     # 情绪处理细则
-```
+- `MISSION.md`: direction.
+- `NOTES.md`: stable preferences and teacher notes.
+- `learning-records/*.md`: durable learning changes.
+- `assignments/*.md`: homework.
+- `reviews/*.md`: feedback.
