@@ -1,6 +1,6 @@
 ---
 name: jn-vocab
-description: Build reusable vocabulary cards from an English article and a learner's unknown-word list. Use when the user provides an English passage and unfamiliar words, and wants meanings, base forms, inflections, collocations, example sentences, and exportable review cards. Short key for personal invocation.
+description: Build reusable vocabulary cards from English articles: base forms, collocations, examples, and Anki-exportable review cards. Short key for personal invocation.
 ---
 
 # English Vocab Card Builder
