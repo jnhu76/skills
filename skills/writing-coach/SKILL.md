@@ -1,6 +1,7 @@
 ---
 name: writing-coach
 description: Stateful writing teacher for Chinese technology-analysis essays, using a Markdown workspace as memory.
+origin: hoooo.org
 disable-model-invocation: true
 argument-hint: Start a lesson, review a draft, or continue the current writing assignment.
 ---

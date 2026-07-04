@@ -1,6 +1,7 @@
 ---
 name: construction-kickoff-supervisor
 description: 在开始实现一个 Job 前使用，把 Job Card / 计划文档转成 TDD-ready Job Pack，明确边界、Context7 证据、风险、测试切片和停工条件。
+origin: hoooo.org
 ---
 
 # Construction Kickoff Supervisor

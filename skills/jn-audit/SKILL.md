@@ -1,6 +1,8 @@
 ---
 name: jn-audit
-description: Analyze a software project's real boundaries — bugs, design boundaries, feature gaps, docs gaps, misuse, environment issues, debt, and contribution strategy. Short key for personal invocation.
+description: Analyze a software project's real boundaries — bugs, gaps, debt, contribution strategy.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # Project Boundary Auditor

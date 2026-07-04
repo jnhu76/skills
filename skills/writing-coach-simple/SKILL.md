@@ -1,6 +1,7 @@
 ---
 name: writing-coach-simple
 description: 训练分析型写作的诊断和修改。用于逐句修改、生成范文、反向讲解。轻量版。
+origin: hoooo.org
 ---
 
 # Writing Coach v2

@@ -1,6 +1,8 @@
 ---
 name: jn-feedback
-description: Correct English output using vocabulary, chunks, and sentence patterns from the learner's recent input material. Short key for personal invocation.
+description: Correct English output using vocabulary, chunks, and sentence patterns from recent input.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # English Output Feedback Coach

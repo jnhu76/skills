@@ -17,6 +17,10 @@
 | `jn-sentence` | 从英文文章提炼可迁移句型 |
 | `jn-chunk` | 分析听力稿 chunk、弱读、连读、重音和 shadowing |
 | `jn-feedback` | 批改基于生词、词块、句型的英文输出 |
+| `cpp-core-standards` | C++ Core Guidelines 编码标准 |
+| `cpp-concurrency-guidelines` | 多线程 C++ 正确性指南 |
+| `cpp-concurrency-performance` | 多线程 C++ 性能优化 |
+| `cpp-lock-free` | 无锁 C++ 与高级原子内存序 |
 | `pharma30days` | 近 N 天医药/生物科技新闻研究 |
 | `writing-coach` | 有状态的写作教学：用 Markdown 工作区做连续训练 |
 | `writing-coach-simple` | 轻量分析型写作诊断和修改，无工作区依赖 |

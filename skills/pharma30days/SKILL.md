@@ -1,6 +1,7 @@
 ---
 name: pharma30days
 description: Research recent pharmaceutical and biotech innovation-drug news, map to drug assets, clinical stages, regulatory milestones, and stock-impact catalysts. Use for pharma/biotech monitoring.
+origin: hoooo.org
 license: MIT
 allowed-tools: Bash Read Write WebSearch
 metadata:

@@ -1,6 +1,8 @@
 ---
 name: jn-sentence
-description: Extract reusable sentence patterns from English articles for writing, picture description, and oral retelling. Short key for personal invocation.
+description: Extract reusable sentence patterns from English articles for writing and retelling.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # English Sentence Pattern Miner

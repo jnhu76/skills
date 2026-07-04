@@ -1,6 +1,8 @@
 ---
 name: jn-chunk
-description: Split English transcripts into listening chunks with weak forms, linking, stress, and shadowing practice. Short key for personal invocation.
+description: Split English transcripts into listening chunks with weak forms, linking, stress, shadowing.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # English Listening Chunk Trainer

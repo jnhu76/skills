@@ -1,6 +1,7 @@
 ---
 name: bounded-review-context
 description: 在请求代码审查前使用，为当前 PR / diff 生成 scoped, impact-aware Review Context Pack；沿当前改动影响链提示 reviewer，但严格限制上下文搜索、禁止全仓库考古和最终审查。
+origin: hoooo.org
 ---
 
 # Bounded Review Context

@@ -1,6 +1,8 @@
 ---
 name: jn-semantic
-description: Extract research or system semantics from a technical problem, paper, benchmark, API, runtime, database mechanism, sandbox, storage system, or agent workflow. Short key for personal invocation.
+description: Extract semantic models from technical systems, papers, APIs, or agent workflows.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # Semantic Extraction Skill

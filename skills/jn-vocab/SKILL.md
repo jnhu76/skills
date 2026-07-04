@@ -1,6 +1,8 @@
 ---
 name: jn-vocab
-description: Build reusable vocabulary cards from English articles: base forms, collocations, examples, and Anki-exportable review cards. Short key for personal invocation.
+description: Build vocabulary cards from English articles — base forms, collocations, Anki export.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # English Vocab Card Builder

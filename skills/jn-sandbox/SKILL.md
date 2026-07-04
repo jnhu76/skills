@@ -1,6 +1,8 @@
 ---
 name: jn-sandbox
-description: Analyze AI agent sandbox systems from first principles to find R&D or research gaps. Short key for personal invocation.
+description: Analyze AI agent sandbox systems from first principles to find R&D gaps.
+origin: hoooo.org
+disable-model-invocation: true
 license: MIT
 metadata:
   version: "0.1.0"

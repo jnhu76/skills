@@ -1,6 +1,8 @@
 ---
 name: jn-bug
-description: Quickly classify an observed project behavior as bug, design boundary, feature gap, documentation gap, environment issue, misuse, or technical debt. Short key for personal invocation.
+description: Classify an observed behavior as bug, boundary, gap, environment issue, misuse, or debt.
+origin: hoooo.org
+disable-model-invocation: true
 ---
 
 # Bug or Boundary Classifier
