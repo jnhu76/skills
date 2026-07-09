@@ -8,6 +8,7 @@
 |---|---|
 | `bounded-review-context` | 请求代码审查前生成 scoped Review Context Pack |
 | `construction-kickoff-supervisor` | 实现前把 Job Card 转成 TDD-ready Job Pack |
+| `/grill-me` | 路由模糊想法或已有计划到合适的质询流程（clarifying / grilling） — 来源：[mattpocock/skills - grilling](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md) |
 | `jn-audit` | 分析软件项目真实边界：bug、边界、缺口、技术债、贡献策略 |
 | `jn-bug` | 快速判断具体现象是 bug、边界、缺口还是误用 |
 | `jn-company` | 用中国产业代际框架分析公司，区分真实标的与叙事股 |
