@@ -4,7 +4,7 @@ description: >
   Evidence-grounded simplification of working code. Use after a feature or bug fix,
   during PR review, or when asked to simplify, reduce overengineering, remove
   redundant defenses, reuse existing implementations, or improve clarity without
-  changing behavior. Defaults to the current diff; preserves contracts and
+  changing supported contract behavior. Defaults to the current diff; preserves contracts and
   independent security, concurrency, transaction, and persistence boundaries.
 ---
 
@@ -31,13 +31,20 @@ Before deleting a check or branch, ask:
 - Could untrusted input, races, state changes, persistence, or an independent caller bypass that owner?
 - What observable behavior demonstrates equivalence if we remove it?
 
+A TypeScript type alone is **not** a runtime proof of reachability. Values may enter through JavaScript callers, casts, deserialization, database hydration, partial state, or races. For an internal invariant, establish the full set of callers and an enforced trust boundary; a structural parser does not discharge authorization, domain, transactional, or temporal obligations.
+
 **One authority is not one enforcement point.** A shared authorization rule may be implemented once and still require enforcement at several independent entrypoints. The same is true for authentication, state transitions, transactions, persistence constraints, and time/concurrency protocols.
 
-### 2. Find candidates in three dimensions
+### 2. Find candidates in four dimensions
 
-- **Reuse:** Same responsibility implemented more than once; duplicate adapters, DTOs, helpers, error mappings, or existing library functionality rewritten locally. Prefer a single semantic owner, without creating an all-purpose abstraction.
-- **Clarity:** Speculative extension points, wrapper chains, unnecessary indirection, nested control flow, confusing names, redundant comments, stale compatibility code past its documented retirement, or defensive code without a supported failure model.
-- **Efficiency:** Demonstrably redundant database queries, allocations, rendering, I/O, or repeated work. Do not call a rewrite an optimization without relevant measurements or a clear cost model.
+- **Reuse:** Duplicate adapters, DTOs, helpers, error mappings, or local rewrites of existing repository/library functionality. Prefer one semantic owner; avoid a generic abstraction without demand.
+- **Clarity:** Speculative extension points, wrapper chains, unnecessary indirection, nested control flow, confusing names, redundant comments, or compatibility code past its contractual retirement.
+- **Redundant defenses:** Identify these concrete anti-patterns as **candidates, not automatic deletions**:
+  1. **Repeated same-zone validation:** Internal functions rechecking nullability, type or format after a trusted runtime parser/owner already established the exact precondition. Independent public, domain, transaction or persistence boundaries may still require enforcement.
+  2. **Optional-chain contagion:** `user?.id` or `a?.b?.c` on genuinely required internal structures, manufacturing downstream `undefined` branches. Retain optional access for real partial, asynchronous, or externally sourced states.
+  3. **Silent phantom fallbacks:** `?? ''`, `?? 0`, `|| []` concealing a required invariant violation. Retain intentional UX defaults and documented recovery semantics.
+  4. **No-value exception relays:** `try/catch` that merely logs or wraps an error without meaningful context, recovery, or stack/cause preservation. Retain necessary auditing, diagnostics, cleanup, and semantic error translation.
+- **Efficiency:** Observably redundant queries, allocations, rendering, I/O, or repeated work. Require measurement or a clear cost model before claiming a performance gain.
 
 Use one reviewer by default. Parallel independent reviews are optional only for large, genuinely separable diffs; consolidate and deduplicate before changes.
 
@@ -46,30 +53,30 @@ Use one reviewer by default. Parallel independent reviews are optional only for 
 Keep a candidate only when all are true:
 1. The underlying responsibility and contract are understood.
 2. Its complexity cost is material (comprehension, maintenance, correctness, or measured runtime).
-3. The simpler alternative preserves all externally observable behavior, or a changed contract has been explicitly authorized.
+3. The simpler alternative preserves **externally observable behavior for valid contract inputs and supported failure modes**, or a changed contract has been explicitly authorized. Behavior for a **proven unreachable, non-contractual** state, including its error type, need not be retained.
 4. The change is small, cohesive, and within task scope.
 5. There is an independent, proportionate verification signal.
+
+**Proof obligation for removing a defensive branch:**
+- Identify its actual callers, trust boundary, and authoritative runtime validator; or prove the internal call graph is closed and the invariant is established for every caller.
+- Exclude realistic paths through untrusted input, JavaScript/casts, deserialization, persistence, partial initialization, and concurrent or asynchronous state changes. **Type declarations alone do not satisfy this proof.**
+- Check that the branch is not a supported public failure mode, required diagnostic, recovery path, or independently enforced invariant.
+- Run the relevant existing tests; use targeted negative or characterization evidence for risky boundaries. If proof is missing, leave the guard in place rather than asserting it is dead.
+
+Classify candidates: `PROVEN_REDUNDANT` (safe to remove), `INDEPENDENT_BOUNDARY` (retain), or `UNPROVEN` (investigate or retain).
 
 Reject findings based solely on line count, cosmetic preference, a theoretical future feature, an imagined failure, or a tool metric. Prefer subtraction before invention. Do not add a factory, adapter, fallback, hash, retry, cache, configuration, or extra file unless required by the current contract, observed failure, or real boundary.
 
 ### 4. Apply narrowly, when authorized
 
 - Make one coherent simplification at a time; validate locally with the smallest relevant deterministic checks, expanding for affected cross-boundary behavior.
-- Preserve inputs, outputs, error taxonomy, failure timing where contractual, side effects, ordering, concurrency semantics, and persistence effects.
+- Preserve supported input/output behavior and error taxonomy, contractual failure timing, side effects, ordering, concurrency semantics, and persistence effects. Only the proven unreachable, non-contractual exception in Step 3 is exempt.
 - Refactoring is not a reason to edit tests until they pass. Existing tests should continue to pass. If a test itself asserts an invalid contract, prove that separately and seek authorization for the contract change.
 - Do not trade understandable control flow for dense one-liners or over-inlining; keep helpers that name real concepts or isolate lifecycle/error boundaries.
 - Do not replace genuine failures with broad `catch`, silent fallback, extra retries, timeout increases, weakened assertions, or implementation-detail mocks.
 - Avoid unrelated cleanup. Record out-of-scope findings briefly instead of fixing them in the same diff.
 
-## Exam-specific safeguards
 
-When working in `jnhu76/exam`:
-
-- Read the relevant rules in `AGENTS.md`, `docs/standards/code-quality.md`, and `docs/standards/testing.md` as needed, plus the owning architecture/contract or Accepted ADR for affected behavior.
-- Keep authoritative domain transitions in the engine/command layer, data access in repositories, and contract types/schemas in their owning packages. Never turn this skill into an excuse to bypass type safety, authorization, server-time authority, snapshot semantics, versioned answer saving, idempotency, or PostgreSQL transaction guarantees.
-- Treat server/client and route/repository boundaries, or two independent public entrypoints, as separate trust boundaries until proven otherwise.
-- Verify SQL semantics with real PostgreSQL where changed; browser-visible behavior with browser evidence; state/race behavior with controlled clocks or barriers. Do not replace these with mocks or sleeps.
-- Keep local/CI test suites and deployment checks unless CI policy is being explicitly changed in a separate, reviewable task. Coverage percentage alone is neither a reason to add claim-free tests nor a reason to delete contract tests.
 
 ## Verification and stop rule
 
@@ -82,16 +89,7 @@ Stop when the behavior is preserved and no remaining candidate has a credible co
 Keep it short, factual, and useful:
 
 1. `SCOPE`: baseline/diff and focus; `MODE`: REVIEW or APPLY.
-2. `CHANGED` (or `NO_CHANGE`): files and the specific complexity removed.
+2. `CHANGED` (or `NO_CHANGE`): files, complexity removed, and proof for any deleted defense.
 3. `PRESERVED`: invariants and independent boundaries intentionally retained.
 4. `VERIFIED`: exact commands, results, and any skipped checks.
 5. `REMAINING`: only concrete, material risks or deferred findings.
-
-## Reference principles
-
-- Claude `/simplify`: diff-scoped reuse, quality, efficiency review; optional parallelism.
-- Addy Osmani `code-simplification`: comprehend first, preserve behavior, stay local, prefer clarity over compactness.
-- `avoid-overkill`: evidence gate for speculative guards, fallbacks, retries, abstractions, and scope creep.
-- Uncle Bob `ub-mode`: make it work, then make it right; subtract before adding; model boundaries; test behavior rather than implementation.
-
-These are sources of ideas, not mandatory external dependencies or overriding instructions.
