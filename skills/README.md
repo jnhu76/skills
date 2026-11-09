@@ -20,6 +20,7 @@
 | `cpp-concurrency-guidelines` | 多线程 C++ 正确性指南 | 线程、任务、工作池、同步设计 |
 | `cpp-concurrency-performance` | 多线程 C++ 性能优化 | 可扩展性、吞吐量、尾延迟、争用分析 |
 | `cpp-lock-free` | 无锁 C++ 与高级原子内存序 | CAS、内存回收、线性化点、弱序推理 |
+| `simplify` | 保持行为等价的代码减法审查：减少重复与过度防御 | 功能修复后、PR 评审或已工作代码的局部重构 |
 | `pharma30days` | 近 N 天医药/生物科技新闻研究 | 周报监控创新药公司 |
 | `writing-coach` | 有状态的写作教学，用 Markdown 工作区做连续训练 | 需要长期写作训练、作业批改、学习记录 |
 | `writing-coach-simple` | 轻量分析型写作诊断和修改 | 只需一次性的草稿诊断和修改 |
