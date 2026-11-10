@@ -2,10 +2,11 @@
 name: simplify
 description: >
   Evidence-grounded simplification of working code. Use after a feature or bug fix,
-  during PR review, or when asked to simplify, reduce overengineering, remove
-  redundant defenses, reuse existing implementations, or improve clarity without
-  changing supported contract behavior. Defaults to the current diff; preserves contracts and
-  independent security, concurrency, transaction, and persistence boundaries.
+  during PR review, or when asked to simplify, remove redundant defenses,
+  reduce test-suite maintenance cost, or assess which tests deserve retention.
+  Defaults to the current diff; preserves supported contracts and independent
+  security, concurrency, transaction, and persistence boundaries.
+  Risk-accepting test deletion requires separate authorization.
 ---
 
 # Simplify — Evidence-Grounded Code Reduction
@@ -17,7 +18,7 @@ description: >
 1. Read the repository's agent instructions first (`AGENTS.md`; `CLAUDE.md` may be a thin adapter). Follow the relevant Accepted ADR, domain contracts, and testing policy. This skill never overrides them.
 2. Determine authorization: **review** is read-only; **apply** requires explicit permission to modify files. Do not commit, push, merge, or change protected resources unless separately authorized by the repository's rules.
 3. Scope defaults to the current task or PR diff. For a PR, compare the correct merge base against the PR head; include staged and unstaged changes. Do not mistake `git diff HEAD` for the full PR diff. **When the user names a whole test suite or asks to reduce accumulated tests, that explicit scope overrides diff-only review: inspect relevant existing tests even when they were not changed by the PR.** Cluster by behavior and failure mechanism; expand to overlapping test files through evidence, not full-repo archaeology. Protect unrelated worktree changes.
-4. Optional focus: `reuse`, `clarity`, `defenses`, `tests`, `efficiency`, or a named function/module. Focus changes review priority, never the safety bar.
+4. Optional focus: `reuse`, `clarity`, `defenses`, `tests`, `test-portfolio`, `efficiency`, or a named function/module. `tests` finds evidence-backed redundancy; `test-portfolio` additionally reviews retention value and risk budget. Focus changes priority, never repository authority.
 
 ## Procedure
 
@@ -71,29 +72,56 @@ Reject findings based solely on line count, cosmetic preference, a theoretical f
 
 - Make one coherent simplification at a time; validate locally with the smallest relevant deterministic checks, expanding for affected cross-boundary behavior.
 - Preserve supported input/output behavior and error taxonomy, contractual failure timing, side effects, ordering, concurrency semantics, and persistence effects. Only the proven unreachable, non-contractual exception in Step 3 is exempt.
-- **Production-code refactoring is not a license to weaken or rewrite tests merely to get green.** In an explicitly requested test-suite reduction, however, a passing, correct test may be deleted or consolidated if its failure-detection responsibility is proven redundant. This does not require claiming the test's contract was invalid. Changing an actual product contract still requires separate authorization and evidence.
+- **Production-code refactoring is not a license to weaken tests merely to get green.** Explicit test-suite work may remove proven redundant tests without claiming their contract was invalid. Dropping *unique but low-value* detection is a distinct risk-budget decision: propose it first; implement only after specific approval consistent with repository testing policy. An actual product contract change needs its own authority.
 - Do not trade understandable control flow for dense one-liners or over-inlining; keep helpers that name real concepts or isolate lifecycle/error boundaries.
 - Do not replace genuine failures with broad `catch`, silent fallback, extra retries, timeout increases, weakened assertions, or implementation-detail mocks.
 - Avoid unrelated cleanup. Record out-of-scope findings briefly instead of fixing them in the same diff.
 
 
+## Test reduction and portfolio review (`focus tests` / `focus test-portfolio`)
 
-## Test-suite reduction mode (`focus tests`)
+Activate `tests` for evidence-backed removal of redundant tests/fixtures. Activate `test-portfolio` when the user asks whether **even correct, uniquely detecting tests** deserve permanent maintenance. These are different decisions: **redundant detection can be removed with equivalence evidence; unique detection can be dropped only by explicit risk acceptance**. A passing test is not inherently valuable, and line coverage is not a retention mandate. The goal is a smaller *necessary detection portfolio*, not a target deletion count.
 
-Activate when asked to simplify, trim, de-duplicate, or reduce the cost of an existing test suite. **The objective is to remove test maintenance/execution cost without losing unique, required fault detection.** Green tests and high coverage do not prove each individual test is necessary. Conversely, a small test count is not proof of quality.
+### 1. Inventory and assign detection ownership
 
-1. **Inventory beyond the diff:** Define the requested suite/module boundary. List test files and group scenarios by behavior, state/role, boundary, failure mechanism, and testing layer. For a large suite, scan its file/test inventory and prioritize likely duplicates or high-cost clusters; report which clusters were actually evaluated. Do not infer `NO_CHANGE` for the whole suite from a few sampled mocks or optional chains.
-2. **Find actual removal candidates:**
-   - **Same-fault duplicates:** Two or more tests at the same layer exercise the same contract partition and catch the same realistic defect. If one is strictly dominated by a stronger test, remove the dominated case.
-   - **Duplicate coverage across layers:** Identify which test owns the failure mechanism. Prefer the lowest sufficient layer; retain a higher-layer test only if that composition or environment owns additional risk. A higher-layer test is not automatically redundant or automatically stronger.
-   - **Speculative/obsolete behavior:** An assertion protects a fallback, guard, compatibility path, or impossible state absent from the supported contract. First prove the premise; do not preserve a test solely because it currently passes. Product behavior changes require separately authorized correction.
-   - **Implementation-mirroring tests:** Mock call-order, private-helper branches, or tautological assertions that could pass while the promised behavior is broken; replace with a behavioral oracle if one is missing, then remove the implementation-only test.
-   - **Test infrastructure duplication:** Repeated full fixtures, app construction, database setup, cleanup, or assertion boilerplate. Prefer deleting redundant work before extracting more helpers; reuse a helper only when its lifecycle, ownership, and isolation are genuinely compatible.
-3. **Record a detection-owner comparison for deletion candidates:** `test -> supported contract -> input/state partition -> failure mechanism -> assertion/oracle -> test layer -> other test that detects the same defect`. Distinguish `DELETE`, `CONSOLIDATE`, `RETAIN_UNIQUE`, and `UNPROVEN`. For `DELETE` or `CONSOLIDATE`, identify the remaining test and show why the removed test has **zero unique required detection**. Same titles, similar code, or matching coverage lines alone are insufficient.
-4. **Apply real subtraction:** When authorized, remove the redundant `it/test`, parameter case, duplicated assertion, fixture, or setup block, not just the coverage instrumentation or the CI job label. Keep all needed negative/security/race/transaction assertions and test-resource lifecycle guarantees. Do not add `skip`, `only`, longer sleeps, retries, or weaker checks to manufacture savings.
-5. **Verify detection and cost:** Run affected tests and relevant safety gates. For high-risk deletions, use an existing known regression, a targeted counterfactual mutation, or independently traceable failure signatures to show the retained test would catch the same defect; do not make broad mutation testing mandatory. Report numbers of tests/assertions/fixture lines removed, test pass counts, and measured time change **where available**, plus named detection owners retained. Do not present a reduction in instrumentation cost as evidence of redundant-test deletion.
+- Scope to the named suites, including relevant files unchanged by the PR. Inventory test files/scenarios, expensive fixtures, and overlapping unit/property/component/API/DB/E2E checks. Review bounded clusters by contract, input/state partition, failure mechanism, oracle, layer, and execution cost. State what was **not** examined; never generalize a sampled result to the whole suite.
+- For each meaningful candidate, map `test → supported contract → state partition → plausible fault → oracle → detection layer/owner`. Review actual assertions and production call paths, not titles, comments, coverage numbers, or similarity scores.
+- Identify the **minimum sufficient layer** for the fault. Pure domain behavior belongs near the domain; wire validation needs at least a wiring witness; SQL/transactions require real DB semantics; browser timing, navigation, session, and rendering mechanics need their real boundary when material. One authority does not erase independent enforcement points.
 
-**Stop rule for test reduction:** Do not impose a deletion quota. But when the user explicitly asks to remove redundant tests, `NO_CHANGE` requires a credible review of the targeted test clusters, specific attempted pairwise/layered comparisons, and an explanation of why candidates retained unique fault detection. A superficial spot-check or a CI-only change does not meet that bar.
+### 2. Challenge the reason to keep a test
+
+Ask in order:
+1. **Contract:** Is this an accepted/current requirement, an actual past regression, an independent boundary, or merely an implementation branch, speculative fallback, obsolete compatibility promise, or historical test name? An obsolete label alone does not prove the behavior is obsolete.
+2. **Distinct fault:** What plausible defect can *this* test catch that retained tests cannot? Compare setup, state partition, act, oracle, environment, and timing; do not infer domination from similar code or narrower assert count alone.
+3. **Impact:** Would failure cause security/authorization bypass, wrong state transition, lost/corrupted data, race, transaction violation, persistence drift, recovery failure, deployment failure, or material user harm? These typically require owned detection even when rare.
+4. **Cost and placement:** Does a cheap, deterministic lower-layer test already own the logic? Is a slower integration/browser check justified by its unique composition? Does the fixture/setup create more cost than the assertion? Could parameterization or fixture consolidation remove cost without dropping detection?
+5. **Maintenance value:** For *low-impact* unique detections, compare concrete maintenance/flakiness/runtime cost against likely defect detection and available upstream or broader checks. Do not pretend the detection is redundant just because it is low-value.
+
+Apply by layer, not by universal test-count targets:
+- **Unit:** Keep nontrivial transformations, state machines, decision partitions, and invariants; challenge getters, trivial forwarding/mapping, call-count mirrors, and repeated happy paths that prove only implementation.
+- **Property-based:** Keep meaningful general laws, state-space/sequence invariants, and counterexamples not cheaply owned by examples; challenge generators with no actual breadth and redundant example assertions. Never require a new property-test framework merely to reduce tests.
+- **Smoke:** Keep a small number of real composition/deployment/boot witnesses; challenge per-page/per-route success-only checks already owned by focused tests. A self-registered test route is not a production integration witness.
+- **Component/API/DB/E2E:** Own the distinct wire, authorization, persistence, browser, or distributed mechanism. Avoid retaining the same deterministic business rule in every layer without an independently named failure mode.
+
+### 3. Classify; do not disguise policy choices as equivalence
+
+- `DELETE_REDUNDANT`: No **unique required** detection; identify the retained owner and show it detects the same defect/partition at a sufficient layer. Can apply with test-edit authorization.
+- `CONSOLIDATE`: Merge cases/assertions or remove repeated fixture/setup while retaining every required input partition and oracle. Verify test ownership, isolation, cleanup, and concurrency before sharing state. Can apply with test-edit authorization.
+- `DROP_OBSOLETE`: The behavior is demonstrably outside the **authoritative current** contract (removed or superseded). Show the contract/history evidence and assess whether the corresponding production fallback must also be removed. Do not silently change an accepted contract; product changes need separate authorization.
+- `DROP_LOW_VALUE`: **There is unique detection, but retaining it may cost more than its low-impact fault risk.** Record exactly what will no longer be detected, affected boundary, maintenance/runtime cost, remaining partial signals, and risk owner. This is a **proposal, not an executable deletion** until the user specifically accepts that lost detection and repository policy permits it. Do not use for an unowned high-impact boundary.
+- `KEEP_CRITICAL`: Required contract or distinct high-impact failure owner; keep even if a strict code-shape duplicate looks tempting. Tests at distinct independent boundaries may both be necessary.
+- `UNPROVEN`: Contract, call graph, fault equivalence, or risk acceptance uncertain; retain pending evidence.
+
+Classifications are about the **test asset**, not permission to weaken production behavior. Removing a non-contractual production guard and deleting its test is a separate code+test change with the Step 3 proof obligation. No unsupported state is "impossible" solely because of a TypeScript type. Do not silently drop rejection tests for public inputs, authz/tenant boundaries, time and concurrency protocols, transactions, or persistence integrity.
+
+### 4. Apply, verify, and stop
+
+- Apply `DELETE_REDUNDANT`/`CONSOLIDATE` incrementally when authorized. For `DROP_OBSOLETE`, first confirm contract authority; for `DROP_LOW_VALUE`, request **specific risk acceptance** separate from general edit permission. Otherwise leave the candidate unchanged and report it.
+- Remove actual `it/test` cases, data rows, mock layers, and redundant fixture work; do not present turning off coverage instrumentation, renaming CI, using `skip`, broad mocks, retries, or weakened assertions as test simplification.
+- Run targeted tests and proportionate cross-boundary gates. Where material, use an existing regression, deterministic negative test, or focused counterfactual to check detection ownership; no mandatory mutation campaign. Record before/after case counts, test/support-code change, comparable runtime, affected contract owners, and tests not run. Never claim the whole CI critical path improved from single-suite timing.
+- **Stopping rule:** No deletion quota; stop when remaining candidates either own important faults, are not cost-effective to assess, or lack proof/authorization. For a suite-wide `NO_CHANGE`, show examined clusters and concrete comparisons; a CI-only change or superficial spot-check is not a full portfolio review.
+
+**Review output:** For material candidates, show `file/test | contract + fault mechanism | classification | retained owner or explicit detection loss | evidence | action/approval needed`. Distinguish **safe subtraction**, **proposed risk-budget removal**, and **product-contract changes** in separate groups.
 
 ## Verification and stop rule
 
@@ -106,7 +134,7 @@ Stop when the behavior is preserved and no remaining candidate has a credible co
 Keep it short, factual, and useful:
 
 1. `SCOPE`: baseline/diff and focus; `MODE`: REVIEW or APPLY.
-2. `CHANGED` (or `NO_CHANGE`): files, complexity removed, and proof for any deleted defense or test; for test-suite work, include the detection-owner map and examined scope.
+2. `CHANGED` (or `NO_CHANGE`): files and complexity removed; for deleted tests give detection ownership, and for portfolio review list proposals with explicit lost signal and any pending risk approval.
 3. `PRESERVED`: invariants and independent boundaries intentionally retained.
 4. `VERIFIED`: exact commands, results, and any skipped checks.
 5. `REMAINING`: only concrete, material risks or deferred findings.

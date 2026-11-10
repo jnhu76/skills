@@ -34,29 +34,38 @@
 仅修改当前任务相关文件，运行受影响的测试，并报告验证结果。
 ```
 
-## 测试套件简化模式
+## 测试资产精简：两种模式
 
-当目标是“清理 API/Web 冗余测试”时，必须将整组被点名的测试套件纳入候选范围，而不是只看 PR 中已修改的 YAML、文件或近邻测试。按行为、前置状态、故障机制和测试层级建立可核对的检测归属矩阵。
+`focus tests`：**只进行可以证明的无损精简**，检查完整的指定套件而非只看当前 diff，删除重复用例、合并参数/断言/fixture；必须说明保留测试如何检测同一故障。
 
-- `DELETE`：证明另一保留用例能够检测同一缺陷，删除无独立价值的用例。
-- `CONSOLIDATE`：合并重复参数、断言、fixture 或 setup，并保留全部必要检测信号。
-- `RETAIN_UNIQUE`：用例具有不可替代的契约或故障检测职责。
-- `UNPROVEN`：证据不足，保留但记录缺口。
+`focus test-portfolio`：进一步审查“正确且具有独立检测能力的测试，是否值得长期维护”。采用 **KEEP requires justification**，但这是一项风险与成本评审，**不是看到低价值测试就自动删除**。
 
-**一个测试既正确又冗余是完全可能的。** 无须先声称测试契约错误才能删除重复测试。禁止依靠降低断言、mock 掉真实边界、跳过测试或放宽时间限制来获得绿灯。不要设置必须删除多少条的配额；但只抽样几个 `?.` 或 Mock 就报告整组套件 `NO_CHANGE`，不满足此模式的审查要求。
+| 裁决 | 含义 | 默认执行权限 |
+|---|---|---|
+| `DELETE_REDUNDANT` | 已证明没有独立的必要故障检测能力 | 获授权可修改 |
+| `CONSOLIDATE` | 合并测试/fixture，保留必要检测 | 获授权可修改 |
+| `DROP_OBSOLETE` | 所保护行为不再属于当前权威契约 | 先核实契约；改变产品行为另需授权 |
+| `DROP_LOW_VALUE` | 有独立检测，但风险收益不足以支持长期维护 | **只能提案；必须单独接受丢失的检测能力** |
+| `KEEP_CRITICAL` | 独立安全、事务、并发、恢复等重要契约的检测 owner | 保留 |
+| `UNPROVEN` | 证据不足、权威不清或缺少风险授权 | 保留 |
+
+重点检查单元测试（非平凡业务性质 vs 实现镜像）、属性测试（真正有价值的不变量 vs 同义例子）、冒烟测试（真实接线 vs 每页重复打开）、API/数据库/浏览器测试（独立信任边界 vs 逐层复制业务规则）。
+
+**不是所有独立测试都必须永久保留，但不能谎称放弃某项检测不会带来损失。** `DROP_LOW_VALUE` 必须记录失去的信号、故障影响、节省的成本、仍然存在的其他信号和需要谁批准。通用的 APPLY 授权不能代替风险接受。已有仓库测试政策、Accepted ADR 优先。
 
 调用示例：
 
 ```text
 /simplify focus tests in apps/api and apps/web
+/simplify focus test-portfolio in apps/api and apps/web
 ```
 
-`focus tests` 是测试资产清理，不等同于将 CI 的 `coverage` 命令改为 `test`。
+停手同样是合理结果：无删除配额，不因测试通过或覆盖率高就自动保留，也不因测试多就强行删。
 
 ## 工作方式
 
 1. 阅读仓库的 `AGENTS.md`、相关契约和当前 diff，确定范围。
-2. 以 **Reuse / Clarity / Redundant Defenses / Efficiency** 四个维度找候选；如果显式清理测试，额外运行 Test-suite reduction mode。
+2. 以 **Reuse / Clarity / Redundant Defenses / Efficiency** 四个维度找候选；测试任务按需运行 `focus tests` 或 `focus test-portfolio`。
 3. 特别检查：同一信任区重复校验、必填字段的过度可选链、静默兜底、无价值异常中转。
 4. 建立实际调用路径与运行时可信前提；分类为 `PROVEN_REDUNDANT`、`INDEPENDENT_BOUNDARY`、`UNPROVEN`。
 5. 获得修改授权后逐项简化并验证；没有合理候选时输出 `NO_CHANGE`。
